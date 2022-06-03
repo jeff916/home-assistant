@@ -1,0 +1,70 @@
+# Map Victron modes to text values
+# Solar Controller
+  - sensor:
+      - name: "Solar Charge Mode"
+      # 1=On;4=Off
+        state: >
+          {% set mapper =  {
+            '1' : 'On',
+            '4' : 'Off' } %}
+            {% set state =  states.sensor.solar_charger_mode_value.state %}
+            {{ mapper[state] if state in mapper else 'Unknown' }}
+
+      - name: "Solar Charger State"
+      # 0=Off;2=Fault;3=Bulk;4=Absorption;5=Float;6=Storage;7=Equalize;11=Other (Hub-1);252=External control
+        state: >
+            {% set mapper =  {
+            '0' : 'Off',
+            '2' : 'Fault',
+            '3' : 'Bulk',
+            '4' : 'Absorption',
+            '5' : 'Float',
+            '6' : 'Storage',
+            '7' : 'Equalize',
+            '11' : 'Other',
+            '252' : 'External control' } %}
+            {% set state =  states.sensor.solar_charger_state_value.state %}
+            {{ mapper[state] if state in mapper else 'Unknown' }}
+
+      - name: "Solar MPP Operation Mode"
+        # 0=Off;1=Voltage/current limited;2=MPPT active;255=Not available
+        state: >
+            {% set mapper =  {
+            '0' : 'Off',
+            '1' : 'Voltage/current limited',
+            '2' : 'MPPT active',
+            '255' : 'Not available'} %}
+            {% set state =  states.sensor.solar_mpp_operation_mode_value.state %}
+            {{ mapper[state] if state in mapper else 'Unknown' }}
+
+      - name: "Solar Charger Error Code"
+      # 0=No error;1=Battery temperature too high;2=Battery voltage too high
+      # 3=Battery temperature sensor miswired (+);4=Battery temperature sensor miswired (-)
+      # 5=Battery temperature sensor disconnected;6=Battery voltage sense miswired (+)
+      # 7=Battery voltage sense miswired (-);8=Battery voltage sense disconnected
+      # 9=Battery voltage wire losses too high;17=Charger temperature too high
+      # 18=Charger over-current;19=Charger current polarity reversed
+      # 20=Bulk time limit reached;22=Charger temperature sensor miswired;
+      # 23=Charger temperature sensor disconnected;34=Input current too high
+        state: >
+            {% set mapper =  {
+            '0' : 'No error',
+            '1' : 'Battery temperature too high',
+            '2' : 'Battery voltage too high',
+            '3' : 'Battery temperature sensor miswired (+)',
+            '4' : 'Battery temperature sensor miswired (-)',
+            '5' : 'Battery temperature sensor disconnected',
+            '6' : 'Battery voltage sense miswired (+)',
+            '7' : 'Battery voltage sense miswired (-)',
+            '8' : 'Battery voltage sense disconnected',
+            '9' : 'Battery voltage wire losses too high',
+            '17' : 'Charger temperature too high',
+            '18' : 'Charger over-current',
+            '19' : 'Charger current polarity reversed',
+            '20' : 'Bulk time limit reached',
+            '22' : 'Charger temperature sensor miswired',
+            '23' : 'Charger temperature sensor disconnected',
+            '34' : 'Input current too high' } %}
+            {% set state =  states.sensor.solar_charger_error_code_value.state %}
+            {{ mapper[state] if state in mapper else 'Unknown' }}
+
