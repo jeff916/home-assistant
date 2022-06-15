@@ -19,4 +19,4 @@ modbus: !include victron-modbus.yaml
 template: !include_dir_merge_list templates
 ```
 Download the Modbus-TCP register list at:
-[Victron Energy Tecnical Infromation](https://www.victronenergy.com/support-and-downloads/technical-information)
+[Victron Energy Technical Information](https://www.victronenergy.com/support-and-downloads/technical-information)
