@@ -3,7 +3,7 @@ These configuration files are my current effort in configuring HA for use in a v
 
 Victron Energy Modbus 
 ------------------------------------------------------------
-I'm using the Modbus interface avaiable via the CCGX to get infromatoin from the Victron components, BMV-702, BlueSolar MPPT and MultiPlus Inverter into Home Assistant.
+I'm using the Modbus interface avaiable via the CCGX to get infromatoin from the Victron Energy components; BMV-702, BlueSolar MPPT and a MultiPlus Inverter into Home Assistant.
 
 ![victron-sensors](./docs/assets/victron-sensors.jpg)
 
