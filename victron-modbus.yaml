@@ -1,7 +1,7 @@
   - name: "victron"
 #
 # Include in your configuration.yaml file:
-# modbus: !include modbus.yamlcc
+# modbus: !include modbus.yaml
 #
 # Modbus device (slave) IDs: /!\ Only for my system
 # BMV-705 245
