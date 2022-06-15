@@ -1,5 +1,9 @@
 # My Home Assistant Setup
 These configuration files are my current effort in configuring HA for use in a van build.
+I'm working on implimenting:
+- [x] Modbus interface for Victron Energy components
+- [ ] Lighting control
+- [ ] Various automations for lighting, battery monitoring, water heater, etc.
 
 Victron Energy Modbus 
 ------------------------------------------------------------
