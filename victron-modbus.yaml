@@ -54,7 +54,7 @@
         scale: 1
 
       - name: "Victron AC Consumption"
-        data_type: uint16
+        data_type: int16
         unit_of_measurement: "W"
         slave: 100
         address: 817
@@ -95,7 +95,7 @@
         address: 850
         scale: 1
         device_class: power
-
+#-------------------------------------------------------------------------------
     # BMV (com.victronenergy.battery) ID:245
       - name: "Victron Battery Time to go"
         data_type: uint16
@@ -133,7 +133,7 @@
         scale: 0.1
         precision: 1
         device_class: current
-
+#-------------------------------------------------------------------------------
     # MPPT Solar (com.victronenergy.solarcharger) ID:247
       - name: "Solar Voltage"
         data_type: uint16
@@ -227,27 +227,32 @@
         address: 774
         # scan_interval: 10
 
-      #
+#-------------------------------------------------------------------------------
       #  Multiplus (com.victronenergy.vebus) ID:246
       - name: "Multiplus Ac current limit"
         data_type: uint16
-        scale: 0.1
-        precision: 1
         slave: 246
         address: 22
+        device_class: current
+        unit_of_measurement: "A"
+        scale: 0.1
+        precision: 1
 
-      - name: "Multiplus VE.Bus state"
+      - name: "Multiplus State Value"
         data_type: uint16
         slave: 246
         address: 31
 
-      - name: "Multiplus Switch Position"
+      - name: "Multiplus Switch Position Value"
         data_type: uint16
         slave: 246
         address: 33
 
       - name: "Multiplus Input current phase 1"
-        data_type: uint16
+        data_type: int16
         slave: 246
         address: 6
-
+        device_class: current
+        unit_of_measurement: "A"
+        scale: 0.1
+        precision: 1

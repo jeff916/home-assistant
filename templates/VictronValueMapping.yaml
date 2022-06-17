@@ -90,3 +90,37 @@
           '34' : 'Input current too high' } %}
         {% set state = states.sensor.solar_charger_error_code_value.state %}
         {{ mapper[state] if state in mapper else 'Unknown' }}
+
+    - name: "Multiplus State"
+      # 0=Off; 1=Low Power; 2=Fault; 3=Bulk; 4=Absorption; 5=Float
+      # 6=Storage; 7=Equalize; 8=Passthru; 9=Inverting; 10=Power assist
+      # 11=Power supply;252=Bulk protection      
+      state: >
+        {% set mapper =  {
+          '0' : 'Off',
+          '1' : 'Low Power',
+          '2' : 'Fault',
+          '3' : 'Bulk',
+          '4' : 'Absorption',
+          '5' : 'Float',
+          '6' : 'Storage',
+          '7' : 'Equalize',
+          '8' : 'Passthru',
+          '9' : 'Inverting',
+          '10' : 'Power Assist',
+          '11' : 'Power Supply',
+          '252' : 'Bulk Protection' } %}
+        {% set state = states.sensor.multiplus_state_value.state %}
+        {{ mapper[state] if state in mapper else 'Unknown' }}
+
+    - name: "Multiplus Switch Position"
+      # 1=Charger Only;2=Inverter Only;3=On;4=Off
+      state: >
+        {% set mapper =  {
+          '0' : 'Off',
+          '1' : 'Charger Only',
+          '2' : 'Inverter Only',
+          '3' : 'On',
+          '4' : 'Off' } %}
+        {% set state = states.sensor.multiplus_switch_position_value.state %}
+        {{ mapper[state] if state in mapper else 'Unknown' }}
