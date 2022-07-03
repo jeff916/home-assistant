@@ -13,3 +13,20 @@ sensor: !include_dir_merge_list sensors
 weather: !include my-weather-station.yaml
 
 ```
+
+I created this script that I can run when I want to update my "home" zone. It uses the location of my phone that is running the HA app. At some point I'll change this to a dedicated GPS device and then have an automated way to update my location automatically
+
+```
+alias: Update Home Location
+sequence:
+  - service: homeassistant.set_location
+    data:
+      latitude: '{{ state_attr(''device_tracker.minime'', ''latitude'') }}'
+      longitude: '{{ state_attr(''device_tracker.minime'', ''longitude'') }}'
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.owm_report
+mode: single
+icon: mdi:weather-sunny-alert
+```
