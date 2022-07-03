@@ -6,7 +6,7 @@ My Weather Station configuration is defined with 2 files:
 - The sensors/weather.yaml file contains the configuration for the rest Open Weather Map sensor.
 - The my-weather-station.yaml file maps the data from the Open Weahter Map service to the HA Weather object
 
-You will need your own API ID from Open Weahter Map. Then you need to update the second line in the sensors/weather.yaml file for your App ID
+You need an API key, which is free, but requires a registration. Then update the second line in the *sensors/weather.yaml* file for your App ID
 
 *resource_template: "https://api.openweathermap.org/data/2.5/weather?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&appid=`<your appid>`"*
 
