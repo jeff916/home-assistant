@@ -15,3 +15,6 @@ More Info: [Victron Modbus](docs/victron-modbus.md)
 
 Zone based weather 
 ------------------------------------------------------------
+The weather services that I tried in HA all seemed to use a location that is defined during their installation for accessing weather data.  This doesn't really work on a "home" that moves around. This weather station is built using the Rest sensor platform in HA to get the weather data from Open Weather Map. Using the Rest platform enables the weather data to accessed using a zones location.
+
+![victron-sensors](./docs/assets/weather.jpg)
