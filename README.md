@@ -13,9 +13,9 @@ I'm using the Modbus interface avaiable via the CCGX to get infromatoin from the
 
 More Info: [Victron Modbus](docs/victron-modbus.md)
 
-Zone based weather 
+Zone based weather data
 ------------------------------------------------------------
-The weather service integrations that I tried in HA all seemed to use a location that is defined during their installation for accessing weather data. This doesn't really work on a "home" that moves around. This weather station is built using the Rest sensor platform in HA to get the weather data from Open Weather Map. Using the Rest platform enables the weather data to accessed using a zones location. All that ones needs to do us update the zone to your current location. 
+A simple weather station that uses OpenWeatherMap as a source for current meteorological data for the location of a HA zone. Perfect for those that have a “home” that travels. Update the location of your home zone and the meteorological data is updated to the new location. 
 
 ![victron-sensors](./docs/assets/weather.jpg)
 
