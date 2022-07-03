@@ -15,7 +15,7 @@ More Info: [Victron Modbus](docs/victron-modbus.md)
 
 Zone based weather data
 ------------------------------------------------------------
-A simple weather station that uses OpenWeatherMap as a source for current meteorological data for the location of a HA zone. Perfect for those that have a “home” that travels. Update the location of your home zone and the meteorological data is updated to the new location. 
+A simple weather station that uses [OpenWeatherMap](https://openweathermap.org) as a source for current meteorological data for the location of a HA zone. Perfect for those that have a “home” that travels. Update the location of your home zone and the meteorological data is updated to the new location. 
 
 ![victron-sensors](./docs/assets/weather.jpg)
 
