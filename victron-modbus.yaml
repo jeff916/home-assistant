@@ -4,22 +4,23 @@
 # modbus: !include modbus.yaml
 #
 # Modbus device (slave) IDs: /!\ Only for my system
-# BMV-705 245
-# MPPT 247
-# Multiplus 246
-# Main System 100
+# BMV (com.victronenergy.battery) ID:245
+# MPPT Solar (com.victronenergy.solarcharger) ID:247
+# Multiplus (com.victronenergy.vebus) ID:246
+# Main System (com.victronenergy.system) ID:100
 #
     retry_on_empty: true
     retries: 10
     type: tcp
 # Change host to your system
     host: 10.188.59.117
+    # host: 192.168.1.87
     port: 502
 
     sensors:
     # Main System (com.victronenergy.system) ID:100    
       - name: "Victron Battery voltage"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 840
         input_type: input
         data_type: uint16
@@ -30,7 +31,7 @@
         scan_interval: 60
 
       - name: "Victron Battery State Value"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 844
         input_type: input
         data_type: uint16
@@ -38,7 +39,7 @@
         scan_interval: 60
 
       - name: "Victron Battery SOC"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 843
         input_type: input
         data_type: uint16
@@ -49,14 +50,14 @@
         
       - name: "Victron Power Source Value"
         data_type: int16
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 826
         scale: 1
 
       - name: "Victron AC Consumption"
         data_type: int16
         unit_of_measurement: "W"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 817
         scale: 1
         device_class: power
@@ -65,7 +66,7 @@
       - name: "Victron DC Consumption"
         data_type: int16
         unit_of_measurement: "W"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 860
         scale: 1
         device_class: power
@@ -74,7 +75,7 @@
       - name: "Victron Shore Power"
         data_type: int16
         unit_of_measurement: "W"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 820
         scale: 1
         device_class: power
@@ -83,7 +84,7 @@
       - name: "Victron Battery Power"
         data_type: int16
         unit_of_measurement: "W"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 842
         scale: 1
         device_class: power
@@ -91,7 +92,7 @@
       - name: "Victron PV Power"
         data_type: uint16
         unit_of_measurement: "W"
-        slave: 100
+        slave: !secret com.victronenergy.system
         address: 850
         scale: 1
         device_class: power
@@ -99,79 +100,103 @@
     # BMV (com.victronenergy.battery) ID:245
       - name: "Victron Battery Time to go"
         data_type: uint16
-        unit_of_measurement: "hours"
-        slave: 245
+        unit_of_measurement: h
+        slave: !secret com.victronenergy.battery
         address: 303
-        #Convert seconds to:
+        # Convert seconds to:
         # hours
         scale: 0.02777
-        # minutes
-        #scale: 0.016666
+        precision: 2
         scan_interval: 60
+        device_class: duration
 
       - name: "Victron Time since last full charge"
         data_type: uint16
-        unit_of_measurement: "hours"
-        slave: 245
+        unit_of_measurement: h
+        slave: !secret com.victronenergy.battery
         address: 289
         scale: 0.02777
+        precision: 2
         scan_interval: 60
+        device_class: duration
 
-      - name: "Victron Battery Consumed Ah"
-        data_type: uint16
-        unit_of_measurement: "Ah"
-        slave: 245
+      - name: "Victron Battery Consumed"
+        data_type: int16
+        unit_of_measurement: Ah
+        slave: !secret com.victronenergy.battery
         address: 265
         scale: -0.1
         precision: 1
 
+      - name: "BMV Battery Voltage"
+        data_type: int16
+        unit_of_measurement: V
+        slave: !secret com.victronenergy.battery
+        address: 259
+        scale: 0.01
+        precision: 2
+        device_class: voltage
+
       - name: "Victron Battery Current"
         data_type: int16
-        unit_of_measurement: "A"
-        slave: 245
+        unit_of_measurement: A
+        slave: !secret com.victronenergy.battery
         address: 261
         scale: 0.1
         precision: 1
         device_class: current
+
+      - name: "BMV Battery Temperature"
+        data_type: int16
+        unit_of_measurement: ºC
+        slave: !secret com.victronenergy.battery
+        address: 262
+        scale: 0.1
+        precision: 1
+        device_class: temperature
+
 #-------------------------------------------------------------------------------
     # MPPT Solar (com.victronenergy.solarcharger) ID:247
       - name: "Solar Voltage"
         data_type: uint16
         unit_of_measurement: "V"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 776
         scan_interval: 10
         scale: 0.01
+        precision: 2
         device_class: voltage
 
       - name: "Solar Current"
         data_type: int16
         unit_of_measurement: "A"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 777
         scan_interval: 10
         scale: 0.1
+        precision: 1
         device_class: current
 
       - name: "Solar Charger Error Code Value"
         data_type: int16
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 788
         scan_interval: 10
 
       - name: "Solar Power"
         data_type: uint16
         unit_of_measurement: W
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 789
         scan_interval: 10
         scale: 0.1
+        precision: 1
         device_class: power
         state_class: measurement
 
       - name: "Solar MPP Operation Mode Value"
         data_type: uint16
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 791
         scan_interval: 10
         scale: 1
@@ -179,17 +204,17 @@
       - name: "Solar Yield today"
         data_type: uint16
         unit_of_measurement: "kWh"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 784
         scan_interval: 3600
         scale: 0.1
-        precision: 3
+        precision: 1
         device_class: power
 
       - name: "Solar Max power today"
         data_type: uint16
         unit_of_measurement: "W"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 785
         scan_interval: 3600
         scale: 1
@@ -198,17 +223,17 @@
       - name: "Solar Yield yesterday"
         data_type: uint16
         unit_of_measurement: "kWh"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 786
         scan_interval: 3600
         scale: 0.1
-        precision: 3
+        precision: 1
         device_class: power
 
       - name: "Solar Max power yesterday"
         data_type: uint16
         unit_of_measurement: "W"
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 787
         scan_interval: 3600
         scale: 1
@@ -216,14 +241,14 @@
 
       - name: "Solar Charger State Value"
         data_type: uint16
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 775
         scan_interval: 10
         scale: 1
         
       - name: "Solar Charger Mode Value"
         data_type: uint16
-        slave: 247
+        slave: !secret com.victronenergy.solarcharger
         address: 774
         # scan_interval: 10
 
@@ -231,7 +256,7 @@
       #  Multiplus (com.victronenergy.vebus) ID:246
       - name: "Multiplus Ac current limit"
         data_type: uint16
-        slave: 246
+        slave: !secret com.victronenergy.vebus
         address: 22
         device_class: current
         unit_of_measurement: "A"
@@ -240,17 +265,17 @@
 
       - name: "Multiplus State Value"
         data_type: uint16
-        slave: 246
+        slave: !secret com.victronenergy.vebus
         address: 31
 
       - name: "Multiplus Switch Position Value"
         data_type: uint16
-        slave: 246
+        slave: !secret com.victronenergy.vebus
         address: 33
 
       - name: "Multiplus Input current phase 1"
         data_type: int16
-        slave: 246
+        slave: !secret com.victronenergy.vebus
         address: 6
         device_class: current
         unit_of_measurement: "A"
