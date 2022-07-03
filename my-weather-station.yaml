@@ -1,0 +1,45 @@
+  - platform: template
+    name: "My Weather Station"
+    condition_template: >
+      {% set id = states.sensor.owm_condition_id.state -%}
+      {%- if id == '800' -%}
+        sunny
+      {%- elif id in ('803', '804') -%}
+        cloudy
+      {%- elif id in ('701', '721', '741') -%}
+        fog
+      {%- elif id == '906' -%}
+        hail
+      {%- elif id in ('210', '211', '212', '221') -%}
+        lightning
+      {%- elif id in ('200', '201', '202', '230', '231', '232') -%}
+        lightning-rainy
+      {%- elif id in ('801', '802') -%}
+        partlycloudy
+      {%- elif id in ('300', '301', '302', '310', '311', '312', '313', '500', '501', '520', '521') -%}
+        rainy
+      {%- elif id in ('600', '601', '602', '611', '612', '620', '621', '622') -%}
+        snowy
+      {%- elif id in ('511', '615', '616') -%}
+        snowy-rainy
+      {%- elif id in ('905', '951', '952', '953', '954', '955', '956', '957') -%}
+        windy
+      {%- elif id in ('958', '959', '960', '961') -%}
+        windy-variant
+      {%- elif id in ('711', '731', '751', '761', '762', '771', '900', '901', '962', '903', '904') -%}
+        exceptional
+      {%- elif id in ('504', '314', '502', '503', '522') -%}
+        pouring
+      {%- else -%}
+        Unkown
+      {%- endif %}
+    temperature_template: "{{ states('sensor.owm_weather_temperature') | float(default=0) }}"
+    humidity_template: "{{ states('sensor.owm_weather_humidity') | float(default=0) }}"
+    pressure_template: "{{ states('sensor.owm_weather_pressure') | float(default=0) }}"
+    wind_speed_template: "{{ states('sensor.owm_weather_wind_speed') | float(default=0) }}"
+    wind_bearing_template: "{{ states('sensor.owm_weather_wind_bearing') | float(default=0) }}"
+    # ozone_template:
+    visibility_template: "{{ states('sensor.owm_weather_visibility') | float(default=0) }}"
+    attribution_template: "Powered by Open Weather Map"
+    # forecast_template: "{{ state_attr('weather.my_region', 'forecast') }}"
+

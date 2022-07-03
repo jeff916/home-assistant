@@ -1,0 +1,55 @@
+  - platform: rest
+    resource_template: "https://api.openweathermap.org/data/2.5/weather?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&appid=<your appid>"
+    json_attributes:
+      - main
+      - weather
+      - wind
+      - visibility
+    name: owm_report
+    value_template: "{{ value_json['weather'][0]['description'].title() }}"
+    #update every 10 minutes with a 60 second timeout
+    #    scan_interval: 600
+    timeout: 60
+
+  - platform: template
+    sensors:
+      owm_weather:
+        value_template: "{{ state_attr('sensor.owm_report', 'weather')[0]['description'].title() }}"
+        entity_picture_template: "{{ 'https://openweathermap.org/img/w/' + state_attr('sensor.owm_report', 'weather')[0]['icon'].lower() + '.png' }}"
+
+      owm_weather_temperature:
+        friendly_name: "Outside temperature"
+        value_template: "{{ state_attr('sensor.owm_report', 'main')['temp'] | float(default=0) }}"
+        unit_of_measurement: "°F"
+        device_class: temperature
+
+      owm_weather_pressure:
+        friendly_name: "Outside pressure"
+        value_template: "{{ state_attr('sensor.owm_report', 'main')['pressure'] | float(default=0) }}"
+        unit_of_measurement: "hP"
+        device_class: pressure
+
+      owm_weather_humidity:
+        friendly_name: "Outside humidity"
+        value_template: "{{ state_attr('sensor.owm_report', 'main')['humidity'] | float(default=0) }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+
+      owm_weather_wind_speed:
+        friendly_name: "Wind speed"
+        value_template: "{{ state_attr('sensor.owm_report', 'wind')['speed'] | float(default=0) }}"
+        unit_of_measurement: "mph"
+
+      owm_weather_wind_bearing:
+        friendly_name: "Wind bearing"
+        value_template: "{{ state_attr('sensor.owm_report', 'wind')['deg'] | float(default=0) }}"
+        unit_of_measurement: "°"
+
+      owm_weather_visibility:
+        friendly_name: "visibility"
+        value_template: "{{ state_attr('sensor.owm_report', 'visibility') | float(default=0) * 0.6213711922 }}"
+        unit_of_measurement: "mi"
+        
+      owm_condition_id:
+        friendly_name: "Condition ID"
+        value_template: "{{ state_attr('sensor.owm_report', 'weather')[0].id }}"
