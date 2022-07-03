@@ -14,7 +14,7 @@ weather: !include my-weather-station.yaml
 
 ```
 
-I created this script that I can run when I want to update my "home" zone. It uses the location of my phone that is running the HA app. At some point I'll change this to a dedicated GPS device and then have an automated way to update my location automatically
+I created this script that I can run when I want to update the location of my "home" zone. It uses the location of my phone that is running the HA app. At some point I'll change this to a dedicated GPS device and then have an automated way to update my location automatically
 
 ```
 alias: Update Home Location
