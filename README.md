@@ -12,3 +12,6 @@ I'm using the Modbus interface avaiable via the CCGX to get infromatoin from the
 ![victron-sensors](./docs/assets/victron-sensors.jpg)
 
 More Info: [Victron Modbus](docs/victron-modbus.md)
+
+Zone based weather 
+------------------------------------------------------------
