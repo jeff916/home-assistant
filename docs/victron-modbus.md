@@ -18,5 +18,17 @@ modbus: !include victron-modbus.yaml
         
 template: !include_dir_merge_list templates
 ```
+
+The Modbus device address are defined as entries in the HA secret file. Create an entry for each Modbus device like: 
+```
+# Use this file to store secrets like usernames and passwords.
+# Learn more at https://www.home-assistant.io/docs/configuration/secrets/
+# victron
+com.victronenergy.system: 100
+com.victronenergy.battery: 245
+com.victronenergy.vebus: 246
+com.victronenergy.solarcharger: 247
+
+```
 Download the Modbus-TCP register list at:
 [Victron Energy Technical Information](https://www.victronenergy.com/support-and-downloads/technical-information)
