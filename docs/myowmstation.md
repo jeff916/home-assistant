@@ -8,7 +8,9 @@ My Weather Station configuration is defined with 2 files:
 
 You need an API key, which is free, but requires a [registration](https://home.openweathermap.org/users/sign_up). Then update the second line in the *sensors/weather.yaml* file for your App ID
 
-*resource_template: "https://api.openweathermap.org/data/2.5/onecall?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&appid=`<your appid>`"*
+```
+resource_template: "https://api.openweathermap.org/data/2.5/onecall?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&appid=`<your appid>`"*
+```
 
 I’ve split up my configuration into multiple files to help keep it a bit more manageable. My Sensor configuration is stored in a sensors folder with multiple files for different sensor definitions. If you use this approach then you can include the files for the weather station by including the following in your configuration.yaml file.
 
