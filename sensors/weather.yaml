@@ -19,6 +19,9 @@
         value_template: "{{ state_attr('sensor.owm_report', 'current') ['weather'][0]['description'].title() }}"
         entity_picture_template: "{{ 'https://openweathermap.org/img/w/' + state_attr('sensor.owm_report', 'current')['weather'][0]['icon'].lower() + '.png' }}"
 
+#
+# removed individual weather sensors for now. If wanted just uncomment 
+#
       # owm_weather_temperature:
       #   friendly_name: "Outside temperature"
       #   unique_id: K_YSIUkvx-GwpQUEtXYrG
