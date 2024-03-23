@@ -17,19 +17,23 @@ sensor: !include_dir_merge_list sensors
 weather: !include my-weather-station.yaml
 ```
 
-I created this script that I can run when I want to update the location of my "home" zone. It uses the location of my phone that is running the HA app. At some point I'll change this to a dedicated GPS device and then have an automated way to update the zone location.
+I created this script that I can run when I want to update the location of my "home" zone. It uses the location of a pepwave router that is scanned by HA.
 
 ```
 alias: Update Home Location
 sequence:
   - service: homeassistant.set_location
     data:
-      latitude: '{{ state_attr(''device_tracker.minime'', ''latitude'') }}'
-      longitude: '{{ state_attr(''device_tracker.minime'', ''longitude'') }}'
+      latitude: "{{ state_attr('sensor.pepwave_gps', 'latitude') }}"
+      longitude: "{{ state_attr('sensor.pepwave_gps', 'longitude') }}"
   - service: homeassistant.update_entity
     data: {}
     target:
       entity_id: sensor.owm_report
+  - service: system_log.write
+    data:
+      level: warning
+      message: Location Updated
 mode: single
 icon: mdi:weather-sunny-alert
 ```
