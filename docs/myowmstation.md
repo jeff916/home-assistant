@@ -1,5 +1,6 @@
 # **My Weather Station**
 ![HA Weather Station](./assets/weather.jpg)
+
 The weather service integrations that I tried in HA all seem to use the location that is defined during installation for weather data. This doesn't really work on a "home" that moves. This weather station is built using the Rest sensor platform in HA to get the weather data from Open Weather Map. Using the Rest platform enables youe change your location for the weather. All that ones needs to do is update the zone to your current location.
 
 My Weather Station configuration is defined with 2 files:
