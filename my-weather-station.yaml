@@ -1,45 +1,100 @@
   - platform: template
     name: "My Weather Station"
+    unique_id: Ytc3vNYRHLTvIOoQEuapP
     condition_template: >
-      {% set id = states.sensor.owm_condition_id.state -%}
-      {%- if id == '800' -%}
+      {% set id = state_attr('sensor.owm_report', 'current' )['weather'][0].id -%}
+      {%- if id == 800 -%}
         sunny
-      {%- elif id in ('803', '804') -%}
+      {%- elif id == 804 -%}
         cloudy
-      {%- elif id in ('701', '721', '741') -%}
+      {%- elif id in (701, 721, 741) -%}
         fog
-      {%- elif id == '906' -%}
+      {%- elif id == 906 -%}
         hail
-      {%- elif id in ('210', '211', '212', '221') -%}
+      {%- elif id in (210, 211, 212, 221) -%}
         lightning
-      {%- elif id in ('200', '201', '202', '230', '231', '232') -%}
+      {%- elif id in (200, 201, 202, 230, 231, 232) -%}
         lightning-rainy
-      {%- elif id in ('801', '802') -%}
+      {%- elif id in (801, 802, 803) -%}
         partlycloudy
-      {%- elif id in ('300', '301', '302', '310', '311', '312', '313', '500', '501', '520', '521') -%}
+      {%- elif id in (300, 301, 302, 310, 311, 312, 313, 500, 501, 520, 521) -%}
         rainy
-      {%- elif id in ('600', '601', '602', '611', '612', '620', '621', '622') -%}
+      {%- elif id in (600, 601, 602, 611, 612, 620, 621, 622) -%}
         snowy
-      {%- elif id in ('511', '615', '616') -%}
+      {%- elif id in (511, 615, 616) -%}
         snowy-rainy
-      {%- elif id in ('905', '951', '952', '953', '954', '955', '956', '957') -%}
+      {%- elif id in (905, 951, 952, 953, 954, 955, 956, 957) -%}
         windy
-      {%- elif id in ('958', '959', '960', '961') -%}
+      {%- elif id in (958, 959, 960, 961) -%}
         windy-variant
-      {%- elif id in ('711', '731', '751', '761', '762', '771', '900', '901', '962', '903', '904') -%}
+      {%- elif id in (711, 731, 751, 761, 762, 771, 900, 901, 962, 903, 904) -%}
         exceptional
-      {%- elif id in ('504', '314', '502', '503', '522') -%}
+      {%- elif id in (504, 314, 502, 503, 522) -%}
         pouring
       {%- else -%}
         Unkown
       {%- endif %}
-    temperature_template: "{{ states('sensor.owm_weather_temperature') | float(default=0) }}"
-    humidity_template: "{{ states('sensor.owm_weather_humidity') | float(default=0) }}"
-    pressure_template: "{{ states('sensor.owm_weather_pressure') | float(default=0) }}"
-    wind_speed_template: "{{ states('sensor.owm_weather_wind_speed') | float(default=0) }}"
-    wind_bearing_template: "{{ states('sensor.owm_weather_wind_bearing') | float(default=0) }}"
+    temperature_template: "{{ state_attr('sensor.owm_report', 'current')['temp'] | float(default=0) }}"
+    apparent_temperature_template: "{{ state_attr('sensor.owm_report', 'current')['feels_like'] | float(default=0) }}"
+    humidity_template: "{{ state_attr('sensor.owm_report', 'current')['humidity'] | float(default=0) }}"
+    pressure_template: "{{ state_attr('sensor.owm_report', 'current')['pressure'] | float(default=0) }}"
+    wind_speed_template: "{{ state_attr('sensor.owm_report', 'current')['wind_speed'] | float(default=0) }}"
+    wind_bearing_template: "{{ state_attr('sensor.owm_report', 'current')['wind_deg'] | float(default=0) }}"
+    dew_point_template: "{{ state_attr('sensor.owm_report', 'current')['dew_point'] | float(default=0) }}"
+    cloud_coverage_template: "{{ state_attr('sensor.owm_report', 'current')['clouds'] | float(default=0) }}"
     # ozone_template:
-    visibility_template: "{{ states('sensor.owm_weather_visibility') | float(default=0) }}"
+    visibility_template: "{{ state_attr('sensor.owm_report', 'current')['visibility'] | float(default=0) * 0.6213711922 }}"
     attribution_template: "Powered by Open Weather Map"
-    # forecast_template: "{{ state_attr('weather.my_region', 'forecast') }}"
+    forecast_template: >-
+      [
+        {% for day_number in range(0,8) %}
+          {
+              {% set id = state_attr('sensor.owm_report', 'daily')[day_number]['weather'][0]['id'] -%}
+              {%- if id == 800 -%}
+                "condition": "sunny",
+              {%- elif id == 804 -%}
+                "condition": "cloudy",
+              {%- elif id in (701, 721, 741) -%}
+                "condition": "fog",
+              {%- elif id == 906 -%}
+                "condition": "hail",
+              {%- elif id in (210, 211, 212, 221) -%}
+                "condition": "lightning",
+              {%- elif id in (200, 201, 202, 230, 231, 232) -%}
+                "condition": "lightning-rainy",
+              {%- elif id in (801, 802, 803) -%}
+                "condition": "partlycloudy",
+              {%- elif id in (300, 301, 302, 310, 311, 312, 313, 500, 501, 520, 521) -%}
+                "condition": "rainy",
+              {%- elif id in (600, 601, 602, 611, 612, 620, 621, 622) -%}
+                "condition": "snowy",
+              {%- elif id in (511, 615, 616) -%}
+                "condition": "snowy-rainy",
+              {%- elif id in (905, 951, 952, 953, 954, 955, 956, 957) -%}
+                "condition": "windy",
+              {%- elif id in (958, 959, 960, 961) -%}
+                "condition": "windy-variant",
+              {%- elif id in (711, 731, 751, 761, 762, 771, 900, 901, 962, 903, 904) -%}
+                "condition": "exceptional",
+              {%- elif id in (504, 314, 502, 503, 522) -%}
+                "condition": "pouring",
+              {%- else -%}
+                "condition": "{{id}}",
+              {%- endif %}
+            "datetime": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['dt'] | timestamp_utc }}",
+            "temperature": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['temp']['max'] }}",
+            "apparent_temperature": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['feels_like']['day'] }}",
+            "templow": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['temp']['min'] }}",
+            "humidity": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['humidity'] }}",
+            "wind_speed": "{{ state_attr('sensor.owm_report', 'daily')[day_number]['wind_speed'] }}",
+            "cid" : "{{ state_attr('sensor.owm_report', 'daily')[day_number]['weather'][0]['id'] }}"
+          },
+        {% endfor %}
+      ]
 
+#other forcast attributes https://www.home-assistant.io/integrations/weather/
+#cloud_coverage
+#dew_point
+#humidity
+#precipitation_probability
+#precipitation
