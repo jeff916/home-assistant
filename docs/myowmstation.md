@@ -4,8 +4,8 @@
 The weather service integrations that I tried in HA all seem to use the location that is defined during installation for weather data. This doesn't really work on a "home" that moves. This weather station is built using the Rest sensor platform in HA to get the weather data from Open Weather Map. Using the Rest platform enables youe change your location for the weather. All that ones needs to do is update the zone to your current location.
 
 My Weather Station configuration is defined with 2 files:
-- The sensors/weather.yaml file contains the configuration for the rest Open Weather Map sensor.
-- The my-weather-station.yaml file maps the data from the Open Weahter Map service to the HA Weather object
+- The [sensors/weather.yaml](../sensors/weather.yaml) file contains the configuration for the rest Open Weather Map sensor.
+- The [my-weather-station.yaml](../my-weather-station.yaml) file maps the data from the Open Weahter Map service to the HA Weather object
 
 You need an API key, which is free, but requires a [registration](https://home.openweathermap.org/users/sign_up). Then update the second line in the *sensors/weather.yaml* file for your App ID
 
