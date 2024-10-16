@@ -1,5 +1,5 @@
   - platform: rest
-    resource_template: "https://api.openweathermap.org/data/2.5/onecall?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&exclude=minutely,hourly&appid=<Your appid>"
+    resource_template: "https://api.openweathermap.org/data/3.0/onecall?lat={{state_attr('zone.home', 'latitude')}}&lon={{state_attr('zone.home', 'longitude')}}&units=imperial&exclude=minutely,hourly&appid=<Your appid>"
     json_attributes:
       - current
       - daily
